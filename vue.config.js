@@ -1,15 +1,20 @@
 const path = require('path')
-
 function resolve(dir) {
   return path.join(__dirname, dir)
-}
-// const vuxLoader = require('vux-loader')
+} 
 module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        // data: `@import "./node_modules/sass-bem/_bem.scss";`
+      }
+    }
+  },
   baseUrl: './',
   configureWebpack: config => {
     require('vux-loader').merge(config, {
-        options: {},
-        plugins: ['vux-ui']
+      options: {},
+      plugins: ['vux-ui']
     })
   },
   chainWebpack: config => {
