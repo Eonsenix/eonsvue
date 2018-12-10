@@ -1,15 +1,11 @@
-/**
- * @author songshaohua
- * @Date 2018-10-31
- */
-import { chunkCommon } from '@utils/common'
+import { readFile } from '@utils/readFile'
 
 const modules = require.context('./apiList/', true, /.js$/)
-let list = chunkCommon(modules) // chunkCommon() 返回一个数组
+let list = readFile(modules) // readFile() 返回一个数组
 
-let obj = {}
+let apiList = {}
 
 for (let item of list) {
-  obj = Object.assign(obj, item)
+  apiList = Object.assign(apiList, item)
 }
-export default obj
+export default apiList

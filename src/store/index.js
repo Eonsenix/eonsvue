@@ -1,20 +1,12 @@
-/**
- * @author: songshaohua
- * @Date: 2018-10-29
- * vuex 入口
- */
-
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+Vue.use(Vuex)
 // 在modules文件夹里面创建文件后自动添加到store中
 const modules = require.context('./modules', true, /.js$/)
 let m = []
 modules.keys().map(key => {
-  m[key.replace(/(\.\/)|(\.js)/ig, '')] = modules(key).default
+  m[key.replace(/(\.\/)|(\.js)/ig, '')] = modules(key).default // 只留下reward/index 并获取他的default
 })
-Vue.use(Vuex)
-
 const store = new Vuex.Store({
   state: {
     cnmb: 'cnmb'

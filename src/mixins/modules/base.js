@@ -7,8 +7,8 @@ export default {
 
   },
   methods: {
-    test () {
-      console.log('sb')
+    testMixin () {
+      console.log('this is mixin test!')
     }
   },
   computed: {

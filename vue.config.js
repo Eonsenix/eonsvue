@@ -26,7 +26,7 @@ module.exports = {
       .set('@directive', resolve('src/directive'))
       .set('@filter', resolve('src/filter'))
       .set('@mixins', resolve('src/mixins'))
-      .set('@router', resolve('src/router'))
+      .set('@routes', resolve('src/routes'))
       .set('@store', resolve('src/store'))
       .set('@utils', resolve('src/utils'))
       .set('@views', resolve('src/views'))
@@ -35,7 +35,7 @@ module.exports = {
     proxy: {
       '/eons': {
         // 登录
-        target: 'http://172.30.60.229:9900', // 本地
+        target: 'http://172.30.60.216:9900', // 本地
         changeOrigin: true
       },
       '/csoms/api/mbp': {
