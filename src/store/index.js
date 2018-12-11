@@ -9,7 +9,7 @@ modules.keys().map(key => {
 })
 const store = new Vuex.Store({
   state: {
-    cnmb: 'cnmb'
+    testState: 'this is index testState!'
   },
   mutations: {},
   actions: {},

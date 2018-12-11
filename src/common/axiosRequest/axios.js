@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { API } from './constApi'
 
 // 全局配置
 const axiosDefault = {
-  baseURL: API,
+  baseURL: '',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
