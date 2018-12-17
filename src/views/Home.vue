@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <div class="test"></div>
     <x-input title="名称" v-model="formData.name" placeholder="请输入名称"></x-input>
     <x-input title="内容" v-model="formData.value" placeholder="请输入内容" mexLength="10"></x-input>
     <x-button type="primary" @click.native="__insert">primary</x-button>
@@ -54,7 +55,7 @@ export default {
     })
   },
   created () {
-    this.__getChatList()
+    // this.__getChatList()
   },
   mounted () {
     console.log(this.$store.state['index'].testState)
@@ -65,7 +66,7 @@ export default {
 </script>
 <style lang="scss">
 .test {
-  width: 100px;
+  width: 2rem;
   height: 30px;
 }
 </style>
