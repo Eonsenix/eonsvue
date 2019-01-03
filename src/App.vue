@@ -3,7 +3,11 @@
     <div class="header">
       <div class="left" @click="close"/>
       <span>{{ $route.meta.title }}</span>
-      <span v-if="$route.meta.rightButton" class="rightButton">{{ $route.meta.rightButton }}</span>
+      <span
+        v-if="$route.meta.rightButton"
+        class="rightButton"
+        @click="done"
+      >{{ $route.meta.rightButton }}</span>
     </div>
     <div class="content">
       <keep-alive>
@@ -14,7 +18,6 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
 export default {
   components: {},
   data () {
@@ -23,14 +26,16 @@ export default {
     }
   },
   computed: {
-   
   },
   watch: {
-
   },
   methods: {
     close () {
-      this.$callNative('exit', {}, () => {})
+      // this.$callNative('exit', {}, () => {})
+      history.go(-1)
+    },
+    done () {
+      this.$store.state['global'].headerRightClick()
     }
   },
   mounted () {

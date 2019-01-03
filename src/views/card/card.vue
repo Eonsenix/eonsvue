@@ -82,15 +82,15 @@
       <van-tabbar v-model="active" class="data-contact">
         <van-tabbar-item icon="shop">
           <span>转发名片</span>
-          <img slot="icon" slot-scope="props" :src="headUrl">
+          <img slot="icon" :src="headUrl">
         </van-tabbar-item>
         <van-tabbar-item icon="shop">
           <span>发短信</span>
-          <img slot="icon" slot-scope="props" :src="headUrl">
+          <img slot="icon" :src="headUrl">
         </van-tabbar-item>
         <van-tabbar-item icon="shop">
           <span>打电话</span>
-          <img slot="icon" slot-scope="props" :src="headUrl">
+          <img slot="icon" :src="headUrl">
         </van-tabbar-item>
       </van-tabbar>
     </div>
@@ -162,7 +162,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .card {
   width: 100%;
   position: relative;

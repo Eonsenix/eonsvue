@@ -31,7 +31,7 @@ example: routes/modules/main/exampleRoute.js
 设置页面font-size: plugins/flexible.js
 
 #UI
-引入vux@2.9.2
+有赞UI
 
 
 

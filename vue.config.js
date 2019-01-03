@@ -11,12 +11,6 @@ module.exports = {
     }
   },
   baseUrl: './',
-  configureWebpack: config => {
-    require('vux-loader').merge(config, {
-      options: {},
-      plugins: ['vux-ui']
-    })
-  },
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src'))

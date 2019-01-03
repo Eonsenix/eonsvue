@@ -1,65 +1,100 @@
-export const callNative = (methodName, paramMap, cb, flag) => {
-  var isAndroid = -1 !== navigator.userAgent.toLowerCase().indexOf('android')
-  //android js bridge
-  !(function(undefined) {
-    var NAMESPACE = 'iBoxpay'
-    var API_NAMESPACE = '__JSBridge__'
-    var context = (window[NAMESPACE] = {})
-    var api = window[API_NAMESPACE] || null
-    if (!api) {
-      return
-      //return alert('发生错误, 未找到 api 对象!');
-    }
-    context.require = function(cmd, params, callback) {
-      params = params || '{}'
-      var result = api.require(cmd, JSON.stringify(params))
-      if (callback && result) {
-        result = JSON.parse(result)
-        callback(result)
-      }
-    }
-  })()
-  var callbackName = 'cb' + new Date().getTime()
-  paramMap == null ? (paramMap = {}) : (paramMap = paramMap)
-  paramMap['callbackName'] = callbackName
-  //paramMap["myCallback"]=cb;
-  var strJsonParam = JSON.stringify(paramMap)
-  var jsonResp = {}
-  window[callbackName] = function(strResp) {
-    //alert("回调:"+JSON.stringify(strResp));
-    try {
-      jsonResp = typeof strResp == 'string' ? eval(strResp) : strResp
-    } catch (err) {}
-    cb && cb(jsonResp)
-    //执行回调后，删除跟回调方法相关的资源
-    if (isAndroid) {
-      if (flag) {
-      } else {
-        delete window[callbackName]
-      }
-    } else {
-      document.getElementById('iframe_' + callbackName).remove()
-      // $('#iframe_' + callbackName).remove();
-    }
-  }
-  if (isAndroid) {
-    try {
-      iBoxpay.require(methodName, paramMap, window[callbackName])
-    } catch (err) {
-      console.log(err)
+var callNative = (function () {
+  if (!window) return
+  var userAgent = navigator.userAgent.toLowerCase()
+  var isAndroid = userAgent.indexOf('android') !== -1
+  // var isIBOXWebview = userAgent.indexOf('iboxpay') !== -1
+  var isIBOXWebview = true
+  var NAMESPACE = 'iBoxpay'
+  var API_NAMESPACE = '__JSBridge__'
+  var context = window[NAMESPACE] = {}
+  var api = window[API_NAMESPACE] || null
+
+  if (!isIBOXWebview) {
+    return function () {
+      return Promise.reject(new Error('不在webview中'))
     }
   } else {
-    var src =
-      'callfunction://' +
-      methodName +
-      '?callback=' +
-      callbackName +
-      '&params=' +
-      strJsonParam
-    var ifreame = document.createElement('iframe')
-    ifreame.id = 'iframe_' + callbackName
-    ifreame.src = src
-    ifreame.style.display = 'none'
-    document.body.appendChild(ifreame)
+    // 生成一个唯一的回调函数到全局给native调用
+    window.generateCb = function () {
+      var isAndroid = userAgent.indexOf('android') !== -1
+      var callbackName = (function () {
+        var cb = 'cb' +
+        (Math.random() * 10000000).toString(16).substr(0, 4) +
+        (new Date()).getTime() +
+        +Math.random().toString().substr(2, 5)
+        return cb
+      })()
+      var iframeId = 'iframe_' + callbackName // ios通过生成iframe的方式
+      var _resolve
+      var _reject
+      var promise = new Promise(function (resolve, reject) {
+        _resolve = resolve
+        _reject = reject
+      })
+      window[callbackName] = function (res) {
+        var eval2 = eval
+        var _res = typeof res === 'string' ? eval2(res) : res
+        if (res.status === 1) {
+          _resolve(_res.data || {})
+        } else {
+          _reject(_res)
+        }
+        if (isAndroid) {
+          delete window[callbackName]
+        } else {
+          document.getElementById(iframeId).remove()
+        }
+      }
+      return {
+        callbackName: callbackName,
+        promise: promise,
+        iframeId: iframeId
+      }
+    }
+    if (isAndroid) {
+      return function (methodName, params) {
+        var result = window.generateCb()
+        var promise = result.promise
+        var callbackName = result.callbackName
+        params = params || {}
+        params['callbackName'] = callbackName
+        // 将native的方法代理到iBoxpay这个全局对象
+        context.require = function () {
+          // 这里调用native注册在全局的方法
+          try {
+            api.require(methodName, JSON.stringify(params))
+          } catch (e) {
+            throw new Error(methodName + '方法未找到')
+          }
+        }
+        try {
+          context.require()
+        } catch (err) {
+          return Promise.reject(err)
+        }
+        return promise
+      }
+    } else {
+      return function (methodName, params) {
+        var result = window.generateCb()
+        var promise = result.promise
+        var callbackName = result.callbackName
+        var iframeId = result.iframeId
+        params = params || {}
+        params['callbackName'] = callbackName
+        var _iframe = document.createElement('iframe')
+        var jsonParams = JSON.stringify(params)
+        var src = 'callfunction://' + methodName + '?callback=' + callbackName + '&params=' + encodeURIComponent(jsonParams)
+
+        _iframe.id = iframeId
+        _iframe.src = src
+        _iframe.style.display = 'none'
+
+        document.body.appendChild(_iframe)
+        return promise
+      }
+    }
   }
-}
+})()
+
+export default callNative

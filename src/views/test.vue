@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="test"></div>
-    <van-button type="primary" @click="$router.push({path: '/test'})">主要按钮</van-button>
+    <van-button type="primary">主要按钮</van-button>
   </div>
 </template>
 
@@ -11,12 +11,14 @@ import mixins from '@mixins'
 export default {
   name: 'home',
   mixins: [mixins.base],
+  components: {
+
+  },
   data () {
     return {
       formData: {
-        name: '1',
-        value: '2',
-        ac: 'gg'
+        name: '1111',
+        value: '2222'
       },
       list: []
     }
@@ -44,7 +46,6 @@ export default {
   },
   created () {
     // this.__getChatList()
-    // console.log(this.RIGHT_DONE(this.headerRightClick))
   },
   mounted () {
     console.log(this.$store.state['index'].testState)

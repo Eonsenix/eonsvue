@@ -1,5 +1,5 @@
 ;(function (doc, win) {
-  var designWidth = 375  // 设计稿的宽度
+  var designWidth = 375 // 设计稿的宽度
   var rootFontSize = 37.5 // 根字体尺寸
   var docEl = doc.documentElement
   var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
@@ -17,7 +17,7 @@
       }
     }
     docEl.style.fontSize = rootFontSize * (clientWidth / designWidth) + 'px'
-  };
+  }
   if (!doc.addEventListener) return
   win.addEventListener(resizeEvt, recalc, false)
   doc.addEventListener('DOMContentLoaded', recalc, false)

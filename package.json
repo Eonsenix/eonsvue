@@ -9,13 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "less-loader": "^4.1.0",
     "sass-bem": "^2.6.5",
     "vant": "^1.5.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vux": "^2.9.2"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
@@ -32,8 +30,7 @@
     "postcss-pxtorem": "^4.0.1",
     "sass-loader": "^7.0.1",
     "vue-loader": "^14.2.2",
-    "vue-template-compiler": "^2.5.17",
-    "vux-loader": "^1.2.9"
+    "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
     "root": true,

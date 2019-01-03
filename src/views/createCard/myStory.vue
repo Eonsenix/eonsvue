@@ -12,10 +12,10 @@
           autosize
         />
       </van-cell-group>
-      	
-<van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple>
-  <van-icon name="photograph" />
-</van-uploader>
+
+      <van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple>
+        <van-icon name="photograph"/>
+      </van-uploader>
       <van-cell value="预览" class="myStory-upload">
         <template slot="title">
           <img :src="headUrl">
@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    onRead(file) {
+    onRead (file) {
       console.log(file)
     }
   }
