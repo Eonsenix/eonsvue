@@ -13,6 +13,9 @@ const actions = {
   },
   getChatList ({ commit }, data) {
     return request(apiList.getChatList, data)
+  },
+  del ({ commit }, data) {
+    return request(apiList.del, data)
   }
 }
 

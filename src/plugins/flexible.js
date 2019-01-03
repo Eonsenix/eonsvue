@@ -1,6 +1,6 @@
 ;(function (doc, win) {
   var designWidth = 375  // 设计稿的宽度
-  var rootFontSize = 16 // 根字体尺寸
+  var rootFontSize = 37.5 // 根字体尺寸
   var docEl = doc.documentElement
   var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
   var recalc = function () {

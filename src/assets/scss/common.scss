@@ -1,6 +1,39 @@
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
-  font-family: PingFangSC-Medium Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+  font-family: PingFangSC-Medium Helvetica Neue, Helvetica, PingFang SC,
+    Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+.van-field .van-cell__title {
+  max-width: 76px;
+}
+input::-webkit-input-placeholder {
+  // placeholder 样式
+  color: #ccc !important;
+}
+.van-cell__value {
+  // cell 的value 颜色
+  color: #ccc;
+}
+.van-cell__value {
+  // cell 的value 颜色
+  .van-radio__label {
+    font-size: 13px;
+    color: #8c8c8c;
+  }
+}
+.van-cell__right-icon {
+  // 右箭头样式
+  color: #bbb;
+  font-size: 13px;
+  margin-left: 8px;
+}
+.group-title {
+  font-size: 13px;
+  color: #8c8c8c;
+  padding: 14px 0 8px 16px;
+  width: 100%;
+  background:#f8f8f8; 
 }

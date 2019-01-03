@@ -1,18 +1,26 @@
 <template>
   <div class="main">
     <div class="test"></div>
-    <van-button type="primary">主要按钮</van-button>
+    <group>
+      <cell title="星球秀场">是骗局吗</cell>
+    </group>
+    <x-button type="primary" @click.native="__insert" style="margin-top:20px;">是的</x-button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, Confirm } from 'vuex'
+import { XInput, XButton, Group, Cell } from 'vux'
 import mixins from '@mixins'
 export default {
   name: 'home',
   mixins: [mixins.base],
   components: {
-
+    XInput,
+    XButton,
+    Group,
+    Cell,
+    Confirm
   },
   data () {
     return {
@@ -24,29 +32,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('home/index', [
-      'insert',
-      'getChatList',
-      'del'
-    ]),
-    __del(id) {
-      const params = {
-        id: id
-      }
-      this.del(params).then(data => {
-        this.__getChatList()
-      })
-    },
     __insert () {
-      const params = this.formData
-      this.insert(params).then(data => {
-        this.__getChatList()
-      })
-    },
-    __getChatList () { // 查询列表
-      this.getChatList().then(data => {
-        this.list = data
-      })
+      alert('是的!')
     }
   },
   computed: {
@@ -55,7 +42,6 @@ export default {
     })
   },
   created () {
-    this.__getChatList()
     /* ^[0-9A-Za-z][\.-_0-9A-Za-z]*@[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)+$
       单词字符包含 下划线 所以不能用\w
       以数字或者字符开头 + 数字字符下划线 横岗 点 (任意数量) + @ + 至少一个 数字字符
@@ -63,9 +49,7 @@ export default {
 
   },
   mounted () {
-    console.log(this.$store.state['index'].testState)
-    console.log(this.showHello)
-    this.testMixin()
+
   }
 }
 </script>
@@ -74,11 +58,6 @@ export default {
   .test {
     width: 100%;
     height: 30px;
-  }
-  .del {
-    color: red;
-    font-size: 13px;
-    margin-left: 14px;
   }
 }
 </style>
